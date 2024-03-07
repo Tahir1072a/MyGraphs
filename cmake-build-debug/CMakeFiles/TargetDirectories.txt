@@ -1,0 +1,3 @@
+C:/Users/alica/source/C/Graphs/cmake-build-debug/CMakeFiles/Graphs.dir
+C:/Users/alica/source/C/Graphs/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/alica/source/C/Graphs/cmake-build-debug/CMakeFiles/rebuild_cache.dir
