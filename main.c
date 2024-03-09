@@ -144,9 +144,9 @@ List* createAllNodes(int size, int matrix[size][size]){
 
 //List yapımız oluşturuldu tekrar dfs algoritması test edilcek ve ilgili graf için otomatik matrix oluşturma işlemi yapılacak.
 int main() {
-    int matrix[3][3] = {{1,1,1},{0,0,1},{1,1,0}};
+    int matrix[4][4] = {{1,1,1,0},{0,0,1,1},{1,1,0,1},{1,0,0,0}};
 
-    List* list = createAllNodes(3,matrix);
+    List* list = createAllNodes(4,matrix);
     List* list2 = createNewList();
     struct GraphNode* node2 = list->nodes[0]->neighbors[2];
     DFS(list->nodes[0], list2);
