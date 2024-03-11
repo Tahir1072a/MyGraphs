@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/alica/source/C/Graphs/cmake-build-debug"
+			"value" : "c:/Users/alica/source/C/Graphs/cmake-build-debug-event-trace"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -431,7 +431,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/alica/source/C/Graphs/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/alica/source/C/Graphs/cmake-build-debug-event-trace/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -543,7 +543,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/PROGRA~1/JETBRA~1/CLION2~1.2/bin/ninja/win/x64/ninja.exe"
+			"value" : "C:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -1119,7 +1119,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/alica/source/C/Graphs/cmake-build-debug"
+			"value" : "C:/Users/alica/source/C/Graphs/cmake-build-debug-event-trace"
 		},
 		{
 			"name" : "Graphs_IS_TOP_LEVEL",

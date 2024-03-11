@@ -1,8 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <windows.h>
 
+// Windows için zaman bilgisini döndüren fonksiyon
+double get_time()
+{
+    LARGE_INTEGER t, f;
+    QueryPerformanceCounter(&t); // Sistem saatinin değerini al
+    QueryPerformanceFrequency(&f); // Saat frekansını al
+    return (double)t.QuadPart/(double)f.QuadPart; // Zaman bilgisini dön
+}
 
+struct IntegerList{
+    int data;
+    struct IntegerList* next;
+};
+
+typedef struct IntegerList IntList;
 
 // Bu node yapımız;
 struct GraphNode {
@@ -61,7 +76,6 @@ void Add(struct GraphNode* node, List* list){
         if(newArr == NULL){
             printErr();
         }
-        free(list->nodes);
         list->nodes = newArr;
         list->capacity *= 2;
 
@@ -86,21 +100,41 @@ bool Search(struct GraphNode* node,List* list){
     return false;
 }
 
-// Kendi yaptığım depht first search algoritması. Verilen düğüme göre komşuları en soldan başlayarak sağa doğru yazdırır. En son kendisini yazdırır.
+//Temel dfs algoritması
 void DFS(struct GraphNode* node, List* list){
-    // Bu düğüm eğer daha önceden ziyaret edinmiş ise fonksiyon geri döner.
-    if(Search(node, list)) return;
-    //Düğüm önceden ziyaret edilmediği için ve artık ilgili düğüm ile işlemler yapılacağından dolayı düğüm ziyaret edilenler listesine eklenir.
-    Add(node,list);
-    // İlgili düğümün komşusu var mı diye kontrol edilir.
-    if(node->num_neighbors != 0){
-        for (int i = 0; i < node->num_neighbors; ++i) {
-            //En sağ düğümden başlayarak sola doğru tarama yapar.
-            DFS(node->neighbors[i],list);
-        }
+    if(Search(node,list)) return;
+    Add(node, list);
+
+    printf("%d->",node->data);
+
+    for (int i = 0; i < node->num_neighbors; ++i) {
+        DFS(node->neighbors[i],list);
     }
-    //İlgili düğümün artık komşusu yoksa veya komşuları daha önceden ziyaret edilmiş ise içindeki datayı ekrana yazdırır.
-    printf("%d\n",node->data);
+}
+
+// Componentsleri de bulan bir algoritma.
+void dfs2(struct GraphNode* node, List* list, int* components, int count){
+    if(Search(node,list)) return;
+    Add(node,list);
+
+    for (int i = 0; i < node->num_neighbors; ++i) {
+        dfs2(node->neighbors[i],list,components,count);
+    }
+
+    components[node->data] = count;
+}
+
+int* findComponents(List* nodeList, int* components){
+    int count = 0;
+    components = (int*) malloc(nodeList->count * sizeof (int));
+    List* emptyList = createNewList();
+    for (int i = 0; i < nodeList->count; ++i) {
+        if(Search(nodeList->nodes[i],emptyList)) continue;
+        count++;
+        dfs2(nodeList->nodes[i],emptyList,components,count);
+    }
+
+    return components;
 }
 
 //verilen matrisi ekrana yazdırır.
@@ -111,6 +145,13 @@ void printMatrix(int satir, int sutun, int matrix[][sutun]){
         }
         printf("\n");
     }
+}
+
+void printArr(int size, int* arr){
+    for (int i = 0; i < size; ++i) {
+        printf("%d \t",arr[i]);
+    }
+    printf("\n");
 }
 
 // Bir komşuluk matrisi alır ve bu matris üzerinden düğümleri oluşturur ve ilişkilerini kurar.
@@ -144,12 +185,21 @@ List* createAllNodes(int size, int matrix[size][size]){
 
 //List yapımız oluşturuldu tekrar dfs algoritması test edilcek ve ilgili graf için otomatik matrix oluşturma işlemi yapılacak.
 int main() {
-    int matrix[4][4] = {{1,1,1,0},{0,0,1,1},{1,1,0,1},{1,0,0,0}};
+    int matrix[6][6] = {{1,1,1,0,0,1},{0,0,1,1,0,0},{1,1,0,1,0,0},{1,0,0,0,0,0},{0,1,0,0,0,1},{0,0,0,0,1,0}};
 
-    List* list = createAllNodes(4,matrix);
+    //Çalışma zamanı testi
+    double z1 = get_time();
+    double z2 = 0;
+
+    List* list = createAllNodes(6,matrix);
     List* list2 = createNewList();
-    struct GraphNode* node2 = list->nodes[0]->neighbors[2];
     DFS(list->nodes[0], list2);
+    printf("\n");
+    int* components = findComponents(list,components);
+    printArr(list->count,components);
+
+    z2 = get_time();
+    printf("Work Time :%f\n", (z2-z1));
 
     return 0;
 }
