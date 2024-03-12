@@ -12,13 +12,6 @@ double get_time()
     return (double)t.QuadPart/(double)f.QuadPart; // Zaman bilgisini dön
 }
 
-struct IntegerList{
-    int data;
-    struct IntegerList* next;
-};
-
-typedef struct IntegerList IntList;
-
 // Bu node yapımız;
 struct GraphNode {
     int data;
@@ -101,16 +94,16 @@ bool Search(struct GraphNode* node,List* list){
 }
 
 //Temel dfs algoritması
-void DFS(struct GraphNode* node, List* list){
-    if(Search(node,list)) return;
-    Add(node, list);
-
-    printf("%d->",node->data);
-
-    for (int i = 0; i < node->num_neighbors; ++i) {
-        DFS(node->neighbors[i],list);
-    }
-}
+//void DFS(struct GraphNode* node, List* list){
+//    if(Search(node,list)) return;
+//    Add(node, list);
+//
+//    printf("%d->",node->data);
+//
+//    for (int i = 0; i < node->num_neighbors; ++i) {
+//        DFS(node->neighbors[i],list);
+//    }
+//}
 
 // Componentsleri de bulan bir algoritma.
 void dfs2(struct GraphNode* node, List* list, int* components, int count){
@@ -184,22 +177,22 @@ List* createAllNodes(int size, int matrix[size][size]){
 }
 
 //List yapımız oluşturuldu tekrar dfs algoritması test edilcek ve ilgili graf için otomatik matrix oluşturma işlemi yapılacak.
-int main() {
-    int matrix[6][6] = {{1,1,1,0,0,1},{0,0,1,1,0,0},{1,1,0,1,0,0},{1,0,0,0,0,0},{0,1,0,0,0,1},{0,0,0,0,1,0}};
-
-    //Çalışma zamanı testi
-    double z1 = get_time();
-    double z2 = 0;
-
-    List* list = createAllNodes(6,matrix);
-    List* list2 = createNewList();
-    DFS(list->nodes[0], list2);
-    printf("\n");
-    int* components = findComponents(list,components);
-    printArr(list->count,components);
-
-    z2 = get_time();
-    printf("Work Time :%f\n", (z2-z1));
-
-    return 0;
-}
+//int main() {
+//    int matrix[6][6] = {{1,1,1,0,0,1},{0,0,1,1,0,0},{1,1,0,1,0,0},{1,0,0,0,0,0},{0,1,0,0,0,1},{0,0,0,0,1,0}};
+//
+//    //Çalışma zamanı testi
+//    double z1 = get_time();
+//    double z2 = 0;
+//
+//    List* list = createAllNodes(6,matrix);
+//    List* list2 = createNewList();
+//    DFS(list->nodes[0], list2);
+//    printf("\n");
+//    int* components = findComponents(list,components);
+//    printArr(list->count,components);
+//
+//    z2 = get_time();
+//    printf("Work Time :%f\n", (z2-z1));
+//
+//    return 0;
+//}
